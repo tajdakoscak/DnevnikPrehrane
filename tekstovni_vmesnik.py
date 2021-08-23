@@ -1,5 +1,5 @@
 
-from model import Stanje, Dan, Opravilo
+from model import Stanje, Dan, Obrok
 
 IME_DATOTEKE = "stanje.json"
 try:
@@ -37,16 +37,14 @@ def izberi_moznost(moznosti):
             print(f"Vnesti morate število med 1 in {len(moznosti)}.")
 
 
+
 def prikaz_spiska(dan):
     vsa = dan.stevilo_vseh()
     return f"{dan.ime} ({vsa})"
 
 
 def prikaz_dneva(obrok):
-    if obrok.rok:
-        return f"{obrok.ime} ({obrok.rok})"
-    else:
-        return f"{obrok.ime}"
+    return f"{obrok.hrana}"
 
 
 def izberi_dan(model):
@@ -54,17 +52,13 @@ def izberi_dan(model):
 
 
 def izberi_obrok(model):
-    return izberi_moznost(
-        [
-            (obrok, prikaz_dneva(obrok))
-            for obrok in model.aktualni_dan.obroki
-        ]
-    )
+    return izberi_moznost([(obrok, prikaz_dneva(obrok)) for obrok in model.aktualni_dan.obroki])
+
 
 
 def tekstovni_vmesnik():
     prikazi_pozdravno_sporocilo()
-    print("Niste še vnesli nobenega dneva.")
+    print("Niste še vnesli nobenega dneva. Prosim, vnesite ga.")
     while True:
         prikazi_aktualne_dneve()
         ukaz = izberi_moznost(
@@ -94,14 +88,14 @@ def tekstovni_vmesnik():
 
 
 def prikazi_pozdravno_sporocilo():
-    print("Pozdravljeni!")
+    print("Pozdravljeni v dnevniku prehrane!")
+    print("Izberite kako želite nadaljevati:")
 
 
 def prikazi_aktualne_dneve():
     if moj_model.aktualni_dan:
         for obrok in moj_model.aktualni_dan.obroki:
-            if not obrok.opravljeno:
-                print(f"- {prikaz_dneva(obrok)}")
+            print(f"- {prikaz_dneva(obrok)}")
     else:
         print("Niste še vnesli nobenega dneva.")
         dodaj_dan()
@@ -126,12 +120,11 @@ def zamenjaj_dan():
 
 
 def dodaj_obrok():
-    print("Vnesite podatke novega obroki.")
-    ime = input("Ime> ")
-    opis = input("Opis> ")
-    rok = None
-    novo_obrok = Opravilo(ime, opis, rok)
-    moj_model.dodaj_obrok(novo_obrok)
+    print("Vnesite podatke novega obroka.")
+    hrana = input("Hrana> ")
+    kalorije = input("Kalorije> ")
+    nov_obrok = Obrok(hrana, kalorije)
+    moj_model.dodaj_obrok(nov_obrok)
 
 
 def pobrisi_obrok():

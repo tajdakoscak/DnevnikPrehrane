@@ -24,8 +24,6 @@ class Stanje:
     def pobrisi_obrok(self, obrok):
         self.aktualni_dan.pobrisi_obrok(obrok)
 
-    def stevilo_zamujenih(self):
-        return sum([dan.stevilo_zamujenih() for dan in self.dnevi])
 
     def v_slovar(self):
         return {
@@ -70,26 +68,12 @@ class Dan:
     def __init__(self, ime):
         self.ime = ime
         self.obroki = []
+        self.kcal = []
 
     def dodaj_obrok(self, obrok):
         self.obroki.append(obrok)
 
-    def stevilo_neopravljenih(self):
-        stevilo = 0
-        for obrok in self.obroki:
-            if not obrok.opravljeno:
-                stevilo += 1
-        return stevilo
 
-    def stevilo_zamujenih(self):
-        stevilo = 0
-        for obrok in self.obroki:
-            if obrok.zamuja():
-                stevilo += 1
-        return stevilo
-
-    def stevilo_vseh(self):
-        return len(self.obroki)
     
     def pobrisi_obrok(self, obrok):
         self.obroki.remove(obrok)
@@ -101,42 +85,36 @@ class Dan:
             "obroki": [obrok.v_slovar() for obrok in self.obroki],
         }
 
+    def stevilo_vseh(self):
+        return len(self.obroki)
+
     @staticmethod
     def iz_slovarja(slovar):
         dan = Dan(slovar["ime"])
         dan.obroki = [
-            Opravilo.iz_slovarja(sl_obroki) for sl_obroki in slovar["obroki"]
+            Obrok.iz_slovarja(sl_obroki) for sl_obroki in slovar["obroki"]
         ]
         return dan
 
 
-class Opravilo:
-    def __init__(self, ime, opis, rok, opravljeno=False):
-        self.ime = ime
-        self.opis = opis
-        self.rok = rok
-        self.opravljeno = opravljeno
+class Obrok:
+    def __init__(self, hrana, kalorije):
+        self.hrana = hrana
+        self.kalorije = kalorije
 
-    def zamenjaj_opravljeno(self):
-        self.opravljeno = not self.opravljeno
 
-    def zamuja(self):
-        rok_pretekel = self.rok and self.rok < date.today()
-        return not self.opravljeno and rok_pretekel
 
     def v_slovar(self):
         return {
-            "ime": self.ime,
-            "opis": self.opis,
-            "rok": date.isoformat(self.rok) if self.rok else None,
-            "opravljeno": self.opravljeno,
+            "hrana": self.hrana,
+            "kalorije": self.kalorije,
         }
+
+
 
     @staticmethod
     def iz_slovarja(slovar):
-        return Opravilo(
-            slovar["ime"],
-            slovar["opis"],
-            date.fromisoformat(slovar["rok"]) if slovar["rok"] else None,
-            slovar["opravljeno"],
+        return Obrok(
+            slovar["hrana"],
+            slovar["kalorije"],
         )
