@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <h1>Dnevnik Prehrane</h1>
+        <h3>Imaš {{vsa}} obrokov!</h3>
+        
+        <h3>Aktualni dan</h3>
+
+        <ul>
+            %if aktualni_dan is None:
+            <h4> Sorry babyyy </h4>
+            %else:
+                %for obrok in obroki:
+                <li> {{obrok.hrana}} </li>
+                %end
+            %end
+        
+        </ul>
+
+
+    </body>
+</html>

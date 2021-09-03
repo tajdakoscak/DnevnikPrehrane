@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <meta charset="utf-8">
+        <title>
+            DNEVNIK PREHRANE
+        </title>
+    </head>
+
+
+<body>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <div class="buttons">
+        % if uporabnisko_ime:
+        <form method="POST" action="/odjava/">
+          <button class="button is-light">
+            Odjavi se
+          </button>
+        </form>
+        % else:
+        <a class="button is-primary" href="/registracija/">
+          <strong>Registriraj se</strong>
+        </a>
+        <a class="button is-light" href="/prijava/">
+          Prijavi se
+        </a>
+        % end
+      </div>
+  <nav class="navbar is-light">
+    <div class="container">
+      <div class="navbar-brand">
+        <span class="navbar-item">
+          <strong>DNEVNIK PREHRANE</strong>
+        </span>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="section">
+    {{!base}}
+  </section>
+</body>
+
+</html>

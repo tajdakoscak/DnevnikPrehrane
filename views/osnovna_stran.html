@@ -1,0 +1,82 @@
+% rebase('base.html')
+<!-- Main container -->
+<nav class="level">
+    <div class="level-left">
+        <form method="POST" action="/zamenjaj-aktualni-dan/">
+            <div class="buttons has-addons field is-horizontal">
+                % for indeks, dan in enumerate(dnevi):
+                % if dan == aktualni_dan:
+                <button class="button is-primary is-selected" name="indeks" value="{{indeks}}">
+                    {{dan.ime}}
+                </button>
+                % else:
+                <button class="button" name="indeks" value="{{indeks}}">
+                    {{dan.ime}}
+                </button>
+                % end
+                % end
+            </div>
+        </form>
+    </div>
+
+    <div class="level-right">
+        <!-- <div class="level-item">
+            <p class="subtitle is-5">
+                <strong>123</strong> posts
+            </p>
+        </div> -->
+            <div class="level-item">
+                <a class="button is-info" href="/dodaj-dan/">dodaj dan</a>
+            </div>
+        </form>
+    </div>
+</nav>
+
+% if aktualni_dan:
+
+<table class="table is-hoverable is-fullwidth">
+    <thead>
+        <tr>
+            <form method="POST" action="/dodaj/">
+                <td></td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="text" name="hrana" placeholder="hrana">
+                        <span class="icon is-small is-left">
+                            <i class="far fa-clipboard-check"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control has-icons-left">
+                        <input class="input is-small" type="number" name="kalorije" placeholder="kalorije">
+                        <span class="icon is-small is-left">
+                            <i class="far fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div class="control">
+                        <button class="button is-info is-small">dodaj</button>
+                    </div>
+                </td>
+            </form>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>HRANA</b></td>
+            <td><b>KALORIJE</b></td>
+        </tr>
+        % for obrok in obroki:
+        <tr>
+            <td>{{ obrok.hrana }}</td>
+            <td>{{ obrok.kalorije }} kcal </td>
+        </tr>
+        %end
+    </tbody>
+</table>
+
+% else:
+
+<p>Nimate še nobenega dneva. <a href="/dodaj-dan/">Dodajte ga!</a></p>
