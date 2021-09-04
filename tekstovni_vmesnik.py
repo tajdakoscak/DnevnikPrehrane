@@ -15,8 +15,7 @@ POGLEJ_DAN = 6
 POGLEJ_DANASNJE_KALORIJE = 7
 IZHOD = 6
 
-
-def preberi_stevilo():
+def preveri_stevilo():
     while True:
         vnos = input("> ")
         try:
@@ -24,13 +23,11 @@ def preberi_stevilo():
         except ValueError:
             print("Vnesti morate število.")
 
-
 def izberi_moznost(moznosti):
-    """Uporabniku našteje možnosti ter vrne izbrano."""
     for i, (_moznost, opis) in enumerate(moznosti, 1):
         print(f"{i}) {opis}")
     while True:
-        i = preberi_stevilo()
+        i = preveri_stevilo()
         if len(moznosti) == 0:
             print("Te možnosti žal ne morete izbrati.")
             return nazaj()
@@ -40,26 +37,27 @@ def izberi_moznost(moznosti):
         else:
             print(f"Vnesti morate število med 1 in {len(moznosti)}.")
 
-
-
 def prikaz_spiska(dan):
     vsa = dan.stevilo_vseh()
     return f"{dan.ime} ({vsa})"
 
-
 def prikaz_dneva(obrok):
     return f"{obrok.hrana} ({obrok.kalorije} kcal)"
 
-
-
+def sestej_kalorije(model):
+    obroki=model.aktualni_dan.obroki if model.aktualni_dan else []
+    dan = model.aktualni_dan
+    skupaj = 0
+    for obrok in obroki:
+        skupaj = skupaj + int(obrok.kalorije)
+    st_kalorij = skupaj
+    print(f"Na dan {dan.ime} ste zaužili {st_kalorij} kcal")
 
 def izberi_dan(model):
     return izberi_moznost([(dan, prikaz_spiska(dan)) for dan in model.dnevi])
 
-
 def izberi_obrok(model):
     return izberi_moznost([(obrok, prikaz_dneva(obrok)) for obrok in model.aktualni_dan.obroki])
-
 
 def tekstovni_vmesnik():
     prikazi_pozdravno_sporocilo()
@@ -130,11 +128,9 @@ def nazaj():
             print("Nasvidenje!")
             break
 
-
 def prikazi_pozdravno_sporocilo():
     print("Pozdravljeni v dnevniku prehrane!")
     print("Izberite kako želite nadaljevati:")
-
 
 def prikazi_aktualne_dneve():
     if moj_model.aktualni_dan:
@@ -144,32 +140,27 @@ def prikazi_aktualne_dneve():
         print("Niste še vnesli nobenega dneva.")
         dodaj_dan()
 
-
 def dodaj_dan():
     print("Prosim, vnesite podatke novega dneva.")
     ime = input("Datum> ")
     nov_dan = Dan(ime)
     moj_model.dodaj_dan(nov_dan)
 
-
 def pobrisi_dan():
     dan = izberi_dan(moj_model)
     moj_model.pobrisi_dan(dan)
-
 
 def zamenjaj_dan():
     print("Izberite dan, na katerega bi preklopili.")
     dan = izberi_dan(moj_model)
     moj_model.zamenjaj_dan(dan)
 
-
 def dodaj_obrok():
     print("Vnesite podatke novega obroka.")
     hrana = input("Hrana> ")
-    kalorije = input("Kalorije> ")
+    kalorije = int(input("Kalorije> "))
     nov_obrok = Obrok(hrana, kalorije)
     moj_model.dodaj_obrok(nov_obrok)
-
 
 def pobrisi_obrok():
     obrok = izberi_obrok(moj_model)
@@ -179,9 +170,7 @@ def poglej_dan():
     print("Izberite dan, katerega si želite ogledati.")
     izberi_dan(moj_model)
 
-def poglej_danasnje_kalorije(dan):
-    pass
-
-
-
+def poglej_danasnje_kalorije():
+    sestej_kalorije(moj_model)
+    
 tekstovni_vmesnik()

@@ -1,37 +1,51 @@
 % rebase('base.html')
 <!-- Main container -->
 <nav class="level">
-    <div class="level-left">
-        <form method="POST" action="/zamenjaj-aktualni-dan/">
-            <div class="buttons has-addons field is-horizontal">
-                % for indeks, dan in enumerate(dnevi):
-                % if dan == aktualni_dan:
-                <button class="button is-primary is-selected" name="indeks" value="{{indeks}}">
-                    {{dan.ime}}
-                </button>
-                % else:
-                <button class="button" name="indeks" value="{{indeks}}">
-                    {{dan.ime}}
-                </button>
-                % end
-                % end
-            </div>
-        </form>
-    </div>
+    <table>
+        <tr>
+            % for dan in dnevi:
+            % if dan == aktualni_dan:
+            <b>Trenutni dan: {{dan.ime}}</b>
+            %end
+            %end
+            <p></p>
+        </tr>
+        <tr>
+        <td><div class="level-left">
+            <form method="POST" action="/zamenjaj-aktualni-dan/">
+                <div class="buttons has-addons field is-horizontal">
+                    % for indeks, dan in enumerate(dnevi):
+                    % if dan == aktualni_dan:
+                    <button class="button is-primary is-selected" name="indeks" value="{{indeks}}">
+                        {{dan.ime}}
+                    </button>
+                    % else:
+                    <button class="button" name="indeks" value="{{indeks}}">
+                        {{dan.ime}}
+                    </button>
+                    % end
+                    % end
+                </div>
+            </form>
+        </div>
+        </td>
 
-    <div class="level-right">
-        <!-- <div class="level-item">
-            <p class="subtitle is-5">
-                <strong>123</strong> posts
-            </p>
-        </div> -->
-            <div class="level-item">
-                <a class="button is-info" href="/dodaj-dan/">dodaj dan</a>
+        <td></td>
+
+        <td>
+            <div class="level-right">
+                    <div class="level-item">
+                        <a class="button is-info" href="/dodaj-dan/">DODAJ NOV DAN</a>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
+
+        </td>
+    </tr>   
 </nav>
+<tr>
 
+</tr>
 % if aktualni_dan:
 
 <table class="table is-hoverable is-fullwidth">
@@ -63,20 +77,47 @@
             </form>
         </tr>
     </thead>
+    
     <tbody>
+
         <tr>
+            <td></td>
             <td><b>HRANA</b></td>
             <td><b>KALORIJE</b></td>
         </tr>
         % for obrok in obroki:
         <tr>
+            <td></td>
             <td>{{ obrok.hrana }}</td>
             <td>{{ obrok.kalorije }} kcal </td>
+            <td>
+                <form method="POST" action="/izbrisi_obrok/">
+                    <input type="hidden" name="indeks" value="{{indeks}}">
+                    <button class="w3-button" >
+                        izbriši
+                        <span class="icon is-small">
+                        </span>
+                    </button>
+                </form>
+            </td>
         </tr>
         %end
+        <tr>
+            %skupaj = 0
+            %for obrok in obroki:
+            %skupaj = skupaj + int(obrok.kalorije)
+            %end
+            %st_kalorij = skupaj
+            <td><hr></td>
+            <td><b> SKUPAJ KALORIJ:</b></td>
+            <td>{{st_kalorij}} kcal</td>
+
+        </tr>
     </tbody>
+
+
 </table>
 
 % else:
 
-<p>Nimate še nobenega dneva. <a href="/dodaj-dan/">Dodajte ga!</a></p>
+<p>Nimate še nobenega dneva. Prosim, dodajte ga!</p>

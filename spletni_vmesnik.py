@@ -21,10 +21,10 @@ def osnovna_stran():
     stanje = nalozi_uporabnikovo_stanje()
     return bottle.template(
         "osnovna_stran.html",
-        obroki=stanje.aktualni_dan.obroki if stanje.aktualni_dan else [],
+        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
         dnevi=stanje.dnevi,
         aktualni_dan=stanje.aktualni_dan,
-        uporabnisko_ime=bottle.request.get_cookie("uporabnisko_ime"),
+        obroki=stanje.aktualni_dan.obroki if stanje.aktualni_dan else [],
     )
 
 
@@ -97,6 +97,17 @@ def dodaj_dan_post():
         stanje.dodaj_dan(dan)
         shrani_uporabnikovo_stanje(stanje)
         bottle.redirect("/")
+
+        
+
+@bottle.post("/izbrisi_obrok/")
+def izbrisi_obrok():
+    indeks = bottle.request.forms.getunicode("indeks")
+    stanje = nalozi_uporabnikovo_stanje()
+    obrok = stanje.aktualni_dan.obroki[int(indeks)]
+    stanje.pobrisi_obrok(obrok)
+    shrani_uporabnikovo_stanje(stanje)
+    bottle.redirect("/")
 
 
 

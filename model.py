@@ -24,12 +24,8 @@ class Stanje:
     def pobrisi_obrok(self, obrok):
         self.aktualni_dan.pobrisi_obrok(obrok)
 
-    
     def stevilo_vseh(self):
         return sum([dan.stevilo_vseh() for dan in self.dnevi])
-
-
-
 
     def v_slovar(self):
         return {
@@ -68,11 +64,7 @@ class Stanje:
             if dan.ime == ime:
                 napake["ime"] = "Ime je že zasedeno."
         return napake
-
-        
-
-
-class Dan:
+class Dan :
     def __init__(self, ime):
         self.ime = ime
         self.obroki = []
@@ -80,12 +72,8 @@ class Dan:
     def dodaj_obrok(self, obrok):
         self.obroki.append(obrok)
     
-
-
-    
     def pobrisi_obrok(self, obrok):
         self.obroki.remove(obrok)
-
 
     def v_slovar(self):
         return {
@@ -110,21 +98,16 @@ class Dan:
         ]
         return dan
 
-
 class Obrok:
     def __init__(self, hrana, kalorije):
         self.hrana = hrana
         self.kalorije = kalorije
-
-
 
     def v_slovar(self):
         return {
             "hrana": self.hrana,
             "kalorije": self.kalorije,
         }
-
-
 
     @staticmethod
     def iz_slovarja(slovar):

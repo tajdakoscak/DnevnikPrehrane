@@ -1,8 +1,8 @@
 % rebase('base.html')
 <form method="POST">
     <div class="field">
-        <h1 style="font-size:30px";class="label">Prijava</h1>
-        <label class="label">Uporabniško ime</label>
+        <h3 style="font-size:20px";class="label">PRIJAVA</h3>
+        <P>Pozdravljeni v dnevniku prehrane. Za nadaljevanje se prijavite:</P>
         <div class="control has-icons-left has-icons-right">
             <input class="input" name="uporabnisko_ime" type="text" placeholder="uporabniško ime" value="{{polja.get('uporabnisko_ime', '')}}">
             <span class="icon is-small is-left">
@@ -13,6 +13,7 @@
         <p class="help is-dangser">{{ napake["uporabnisko_ime"] }}</p>
         % end
     </div>
+    <p> </p>
     <div class="field is-grouped">
         <div class="control">
             <button class="button is-link">Prijavi se</button>
