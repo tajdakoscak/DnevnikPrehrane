@@ -70,6 +70,14 @@
                     </div>
                 </td>
                 <td>
+                    <select id="tip_obroka" name="tip obroka">
+                        <option value="zajtrk">zajtrk</option>
+                        <option value="malica">kosilo</option>
+                        <option value="kosilo">večerja</option>
+                        <option value="večerja">malica</option>
+                    </select>
+                </td>
+                <td>
                     <div class="control">
                         <button class="button is-info is-small">dodaj</button>
                     </div>
@@ -84,12 +92,14 @@
             <td></td>
             <td><b>HRANA</b></td>
             <td><b>KALORIJE</b></td>
+            <td><b>TIP OBROKA</b></td>
         </tr>
         % for obrok in obroki:
         <tr>
             <td></td>
             <td>{{ obrok.hrana }}</td>
             <td>{{ obrok.kalorije }} kcal </td>
+            <td>{{ obrok.tip_obroka }} </td>
             <td>
                 <form method="POST" action="/izbrisi_obrok/">
                     <input type="hidden" name="indeks" value="{{indeks}}">

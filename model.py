@@ -1,7 +1,13 @@
 from datetime import date
 import json
 
-
+TIPI_OBROKOV = [
+    "Zajtrk",
+    "Dopoldanska malica",
+    "Kosilo",
+    "Popoldanska malica",
+    "Večerja"
+]
 class Stanje:
     def __init__(self):
         self.dnevi = []
@@ -99,14 +105,16 @@ class Dan :
         return dan
 
 class Obrok:
-    def __init__(self, hrana, kalorije):
+    def __init__(self, hrana, kalorije, tip_obroka):
         self.hrana = hrana
         self.kalorije = kalorije
+        self.tip_obroka = tip_obroka
 
     def v_slovar(self):
         return {
             "hrana": self.hrana,
             "kalorije": self.kalorije,
+            "tip obroka": self.tip_obroka
         }
 
     @staticmethod
@@ -114,4 +122,5 @@ class Obrok:
         return Obrok(
             slovar["hrana"],
             slovar["kalorije"],
+            slovar["tip obroka"]
         )

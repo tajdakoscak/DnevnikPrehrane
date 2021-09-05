@@ -71,7 +71,8 @@ def odjava_post():
 def dodaj_obrok():
     hrana = bottle.request.forms.getunicode("hrana")
     kalorije = bottle.request.forms.getunicode("kalorije")
-    obrok = Obrok(hrana,kalorije)
+    tip_obroka = bottle.request.forms.getunicode("tip obroka")
+    obrok = Obrok(hrana,kalorije,tip_obroka)
     stanje = nalozi_uporabnikovo_stanje()
     stanje.dodaj_obrok(obrok)
     shrani_uporabnikovo_stanje(stanje)

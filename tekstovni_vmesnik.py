@@ -42,7 +42,7 @@ def prikaz_spiska(dan):
     return f"{dan.ime} ({vsa})"
 
 def prikaz_dneva(obrok):
-    return f"{obrok.hrana} ({obrok.kalorije} kcal)"
+    return f"{obrok.tip_obroka}: {obrok.hrana} ({obrok.kalorije} kcal)"
 
 def sestej_kalorije(model):
     obroki=model.aktualni_dan.obroki if model.aktualni_dan else []
@@ -159,7 +159,8 @@ def dodaj_obrok():
     print("Vnesite podatke novega obroka.")
     hrana = input("Hrana> ")
     kalorije = int(input("Kalorije> "))
-    nov_obrok = Obrok(hrana, kalorije)
+    tip_obroka = input("Tip obroka(zajtrk/malica/kosilo/večerja)> ")
+    nov_obrok = Obrok(hrana, kalorije,tip_obroka)
     moj_model.dodaj_obrok(nov_obrok)
 
 def pobrisi_obrok():
